@@ -1,10 +1,10 @@
 from fastapi import FastAPI 
 import httpx
 from contextlib import asynccontextmanager 
-from routes import weather as weather_routes, get_http_client
+from routes import weather as weather_routes
 from utils.api_config import DEFAULT_HEADERS, HTTP_TIMEOUT
 
-# Added the lifespan event to manage the shared HTTP client for better performance and resource management
+# Added the lifespan event to manage the shared HTTP client for better performance and 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):

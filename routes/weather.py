@@ -22,7 +22,7 @@ The Professional Solution: Create one shared client when the app starts, reuse i
 
 """
 
-@weather_router.get("/weather/city/{city}", response_model=WeatherResponse)
+@weather_router.get("/city/{city}", response_model=WeatherResponse)
 async def read_weather_by_city(
     city: str,
     # INJECTION HAPPENS HERE:
@@ -31,7 +31,7 @@ async def read_weather_by_city(
     # Pass the client to the service
     return await get_weather_by_city(client, city)
 
-@weather_router.get("/weather/direct", response_model=WeatherResponse)
+@weather_router.get("/direct", response_model=WeatherResponse)
 async def read_weather_by_coords(
     lat: float = Query(..., ge=-90, le=90),
     lon: float = Query(..., ge=-180, le=180),
