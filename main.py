@@ -1,9 +1,21 @@
 from fastapi import FastAPI 
+import httpx
+from contextlib import asynccontextmanager 
+from routes import weather as weather_routes, get_http_client
+from utils.api_config import DEFAULT_HEADERS, HTTP_TIMEOUT
 
-app = FastAPI()
+# Added the lifespan event to manage the shared HTTP client for better performance and resource management
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    print("Starting up HTTP client...")
+    app.state.http_client = httpx.AsyncClient(headers=DEFAULT_HEADERS, timeout=HTTP_TIMEOUT)
+    yield
+    print("Shutting down HTTP client...")
+    await app.state.http_client.aclose()
 
 
-from routes import weather as weather_routes
+app = FastAPI(lifespan=lifespan)
 
 app.include_router(weather_routes.weather_router)
 
