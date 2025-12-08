@@ -1,7 +1,7 @@
 from pydantic import BaseModel
 
 
-class WeatherReponse(BaseModel):
+class WeatherResponse(BaseModel):
     city: str
     latitude: float
     longitude: float
